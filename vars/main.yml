@@ -1,0 +1,4 @@
+---
+# vars file for crowdsec-plus-console
+vars:
+  crowdsec_whitelist_good_actors: "false"

@@ -1,0 +1,42 @@
+---
+# tasks file for crowdsec-plus-console
+
+- fail:
+    msg: "bailing out, this role requires 'crowdsec_enroll_key'  and 'crowdsec_enroll_name' to be defined." 
+  when:
+  - crowdsec_enroll_key is not defined
+  - crowdsec_enroll_name is not defined
+
+- name: download crowdsec repo install script
+  get_url: url=https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh dest=/root/crowdsecinstaller.sh mode=0755
+  become: yes
+
+- name: execute crowdsec repo install script
+  shell: /root/crowdsecinstaller.sh
+  become: yes
+
+- name: remove the crowdsec repo install script
+  file: path=/root/crowdsecinstaller.sh state=absent
+
+- name: adds crowdsec package
+  apt:
+    name: crowdsec
+    state: present
+  become: yes
+
+- name: adds crowdsec-firewall-bouncer-iptables package
+  apt:
+    name: crowdsec-firewall-bouncer-iptables
+    state: present
+  become: yes
+
+- name: install whitelist-good-actors collection
+  shell: cscli collections install crowdsecurity/whitelist-good-actors
+  when: crowdsec_whitelist_good_actors | bool
+  become: yes
+
+- name: enrolls this machine to crowdsec console
+  command: cscli console enroll --name {{ crowdsec_enroll_name }} {{ crowdsec_enroll_key }}
+  become: yes
+
+...
