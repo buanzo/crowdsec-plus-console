@@ -1,6 +1,6 @@
 galaxy_info:
   author: buanzo
-  description: a simple crowdsec plus crowdsec console role. supports tags.
+  description: a simple crowdsec role, with support for CrowdSec Console.
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
