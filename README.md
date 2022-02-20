@@ -1,3 +1,5 @@
+Project cancelled. Please use [Alf149's](https://github.com/alf149/ansible/tree/main/lab/roles/security/crowdsec/tasks)
+
 CrowdSec + Console
 ==================
 
